@@ -1,14 +1,45 @@
 $(document).ready(function(){
+    var answerClicked = 100;
+
+    quiz.reset();
+    console.log(answerClicked);
 
     $('#start').on("click", function(){
+
+        quiz.start(); //timer is on, 30 seconds for each questions
+        console.log(counter);
         //next question in 2 seconds
-        
-        displayQuestion();
+       // quiz.displayQuestion();
     })
 
     $('.option').on("click", function(){
         answerClicked = this.id;        
     })
+
+    //if correctAnswer and time is not up
+    if (answerClicked === quiz.quizList[quiz.numOfQuestions].choices[quiz.correctAnswer]) {
+        quiz.displayAnswer();
+        quiz.correct++;
+        $('#answer').html(' Correct! '+ quiz.quizList[quiz.numOfQuestions].choices[quiz.correctAnswer] + ' ');
+    }
+    //time is up
+    else  if (quiz.time === 30) {
+        quiz.displayAnswer();
+        $('#answer').html(' Your time is up! Correct answer: '+ quiz.quizList[quiz.numOfQuestions].choices[quiz.correctAnswer] + ' ');
+        quiz.timesUp++;
+    }
+    else {
+        quiz.displayAnswer();
+        //if answer is not correct
+        $('#answer').html(' The correct answer: '+ quiz.quizList[quiz.numOfQuestions].choices[quiz.correctAnswer] + ' ');
+        quiz.incorrect++;
+    }
+
+    console.log(quiz.quizList[quiz.numOfQuestions].choices[quiz.correctAnswer]);
+
+    if (quiz.numOfQuestions === quiz.quizList.length) {
+        quiz.quizOver();
+    }
 
 });
 
@@ -34,80 +65,61 @@ var quiz = {
                 choices: ["Waterloo", "Baker Street", "Kings Cross", "Victoria"],
                 correctAnswer: 0 }
         ],  
-    time: 30,
-    numOfQuestions: 1,
+    time: 5,
+    numOfQuestions: 0,
     correct: 0,
     incorrect: 0,
     timesUp: 0,
     reset: function() {
-        quiz.time = 0;
-        quiz.numOfQuestions = 1;  
-        correct = 0;
-        incorrect = 0;
-        timesUp = 0;
+        quiz.time = 5;
+        quiz.numOfQuestions = 0;  
+        quiz.correct = 0;
+        quiz.incorrect = 0;
+        quiz.timesUp = 0;
         $('#timer'). hide();
         $('#question').hide();
         $('#answer').hide();
         $('#choices').hide();
         $('#game-over-contaner').hide();
         $('#game-over').hide();        
-    }
+    },
     start: function() {
-        counter = setInterval(countDown, 1000); // here timer should be counting    
-    }
+        counter = setInterval(quiz.countDown, 1000); // here timer should be counting    
+    },
     stop: function() {
         clearInterval(counter);
-    }
+    },
     recordNumber: function() {
         quiz.numOfQuestions++;
-    }
+    },
     countDown: function() {
         quiz.time--;
-    }
+        $('#timer').show().html('Time remaining: ' + quiz.time + ' sec.');
+        quiz.displayQuestion();
+        console.log(quiz.time);
+    },
     displayQuestion: function(){
-        start(); //timer is on, 30 seconds for each questions
+        console.log(quiz.time);
         $('#start').hide();
-        $('#timer').html('Time remaining: 'quiz.time + ' sec.');
+        
         $('#question').show();
         $('#choices').show();
 
-        $('#question').html(''+ quizList[quiz.numOfQuestions].question + ' ');
+        $('#question').html(''+ quiz.quizList[quiz.numOfQuestions].question + ' ');
         $('#choices').empty();
         
-        for (var i = 0; i < quizList[quiz.numOfQuestions].choices.length; i++ ) {
+        for (var i = 0; i < quiz.quizList[quiz.numOfQuestions].choices.length; i++ ) {
 
-            $('#choices').append('<li id="' + i + '" class="list-group-item list-group-item-info">' + quizList[quiz.numOfQuestions].choices[i] + '</li>');
+            $('#choices').append('<li id="' + i + '" class="list-group-item list-group-item-info">' + quiz.quizList[quiz.numOfQuestions].choices[i] + '</li>');
         
-            console.log(quizList[quiz.numOfQuestions].choices[i]);
+            console.log(quiz.quizList[quiz.numOfQuestions].choices[i]);
         }
-    }
+    },
     displayAnswer: function(){
-        recordNumber(); //count questions/answers
-        stop(); //reset time
+        quiz.recordNumber(); //count questions/answers
+        quiz.stop(); //reset time
         $('#question-contaner').hide();
-        //if correctAnswer and time is not up
-        if (answerClicked === quiz.quizList[quiz.numOfQuestions].choices[correctAnswer]) {
-            quiz.correct++;
-            $('#answer').html(' Correct! '+ quiz.quizList[quiz.numOfQuestions].choices[correctAnswer] + ' ');
-        }
-        //time is up
-        else  if (quiz.time === 30) {
-            $('#answer').html(' Your time is up! Correct answer: '+ quiz.quizList[quiz.numOfQuestions].choices[correctAnswer] + ' ');
-            quiz.timesUp++;
-        }
-        else {
-            //if answer is not correct
-            $('#answer').html(' The correct answer: '+ quiz.quizList[quiz.numOfQuestions].choices[correctAnswer] + ' ');
-            quiz.incorrect++;
-        }
-        console.log(quiz.quizList[quiz.numOfQuestions].choices[correctAnswer]);
-
-        if (quiz.numOfQuestions === quiz.quizList.length) {
-            quizOver();
-        }
-        displayQuestion();
-
-    }
+    },
     quizOver: function() {
         $('#game-over-contaner').show();
         $('#correct-answers').html('Correct answers: ' + quiz.correct);

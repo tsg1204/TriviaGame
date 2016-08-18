@@ -45,6 +45,8 @@ main {
 
 .main-section {
 	background-image: url('../images/question.gif');
+	background-repeat: no-repeat;
+	background-position: center;
 	padding: 100px;
 	margin: auto;
 	width: 100%;
