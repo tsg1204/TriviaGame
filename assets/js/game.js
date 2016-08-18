@@ -8,8 +8,9 @@ $(document).ready(function(){
 
         quiz.start(); //timer is on, 30 seconds for each questions
         console.log(counter);
+        console.log(quiz.numberOfQuestions);
         //next question in 2 seconds
-       // quiz.displayQuestion();
+        quiz.displayQuestion();
     })
 
     $('.option').on("click", function(){
@@ -43,6 +44,7 @@ $(document).ready(function(){
 
 });
 
+var counter = 0;
 var quiz = {
     quizList: [{
                 question: "What is the population of Brazil?",
@@ -93,9 +95,9 @@ var quiz = {
         quiz.numOfQuestions++;
     },
     countDown: function() {
-        quiz.time--;
+        
         $('#timer').show().html('Time remaining: ' + quiz.time + ' sec.');
-        quiz.displayQuestion();
+        quiz.time--;
         console.log(quiz.time);
     },
     displayQuestion: function(){
