@@ -15,7 +15,10 @@ $(document).ready(function(){
         console.log(answerClicked);
 
         clearInterval(showQuestion);
+
+        quiz.displayAnswer();
     })
+
   
 
 });
@@ -74,6 +77,18 @@ var quiz = {
         
             console.log(quiz.quizList[index].choices[i]);
         }
+
+        $('.option').on("click", function(){
+            answerClicked = this.id;      
+            console.log(answerClicked);
+
+            clearInterval(showQuestion);
+
+            quiz.displayAnswer();
+
+        })
+
+        //console.log('answer option: ' + answerClicked);
     },
 
     nextQuestion() {
@@ -88,6 +103,32 @@ var quiz = {
             quiz.quizOver();
         }
 
+    },
+
+    displayAnswer() {
+        $('#answer').show();
+
+        //if correctAnswer and time is not up
+        if (answerClicked === quiz.quizList[quiz.index].choices[quiz.correctAnswer]) {
+            //quiz.displayAnswer();
+            quiz.correct++;
+            $('#answer').html(' Correct! '+ quiz.quizList[quiz.index].choices[quiz.correctAnswer] + ' ');
+        }
+        //incorrect answer
+        if (answerClicked != quiz.quizList[quiz.index].choices[quiz.correctAnswer]) {
+            //quiz.displayAnswer();
+            //if answer is not correct
+            $('#answer').html(' The correct answer: '+ quiz.quizList[quiz.index].choices[quiz.correctAnswer] + ' ');
+            quiz.incorrect++;
+        }
+        //time is up
+        if (quiz.time === 5) {
+            //quiz.displayAnswer();
+            $('#answer').html(' Your time is up! Correct answer: '+ quiz.quizList[quiz.index].choices[quiz.correctAnswer] + ' ');
+            quiz.timesUp++;
+        }
+        clearInterval(showQuestion);
+        quiz.nextQuestion();
     },
 
     quizOver: function() {
