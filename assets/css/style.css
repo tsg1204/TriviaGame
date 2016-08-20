@@ -1,6 +1,9 @@
 /*@import "font-awesome";*/
 body {
-	color:#3973ac;
+	color: #fff; /*#3973ac;*/
+	//background: url('../images/storm.jpg') no-repeat center;
+	//background-repeat: no-repeat;
+	//background-position: center;
 	font-size: 18px;
 	line-height: 34px;	
 	background-color: #ddd;
@@ -12,7 +15,7 @@ body {
 	width: 100%;
 	max-width: 960px;
 	margin: 0 auto;
-	clear: both;
+	//clear: both;
 }
 h1, 
 h2,
@@ -25,12 +28,12 @@ p:last-child {
 }
 h1, h2, h3 {
 	font-weight: 700;
-	color: #3973ac;
+	color: #fff;
 }
 h1 {
 	font-size: 30px;
 	line-height: 49px;
-	border-bottom: 3px solid #3973ac;
+	/*border-bottom: 3px solid #3973ac;*/
 	padding-bottom: 20px;
 	text-align: center;
 }
@@ -44,13 +47,29 @@ main {
 }
 
 .main-section {
-	background-image: url('../images/question.gif');
-	background-repeat: no-repeat;
-	background-position: center;
 	padding: 100px;
 	margin: auto;
 	width: 100%;
-	border: 1px solid #ddd;
+	//border: 1px solid #ddd;
+	text-align: justify;
+}
+#top-image {
+	width: 100%;
+}
+#question-contaner {
+	margin-bottom: 20px;
+}
+#start, #start-over {
+	background-color: #F2C76E;
+}
+#myImg {
+	width: 50%;
+	margin: 10px 0px 5px 20px;
+}
+.option {
+	text-align: center;
+}
+#question {
 	text-align: justify;
 }
 

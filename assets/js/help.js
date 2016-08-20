@@ -1,4 +1,9 @@
-
+        if ((quiz.time * 100) === 10000) {
+            console.log('Time"s up: ' + quiz.time);
+            timer.stop();
+            quiz.displayAnswer();
+            quiz.outOfTime = true;
+        }
 
 
     //if correctAnswer and time is not up
@@ -132,3 +137,13 @@ var quiz = {
         $('#unanswered').html('Correct answers: ' + quiz.timesup);        
     }
 };
+
+
+        $('.option').on("click", function(){
+            answerClicked = this.id;      
+
+            clearInterval(showQuestion);
+
+            quiz.displayAnswer(answerClicked);
+
+        })
